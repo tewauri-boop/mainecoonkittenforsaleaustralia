@@ -1,0 +1,6 @@
+{
+  "name": "Maine Coon Heaven",
+  "description": "Premier Maine Coon cattery in Sydney, Australia. Ethically raised, health-tested champion bloodline Maine Coon cats and kittens with nationwide delivery and crypto discount.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

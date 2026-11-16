@@ -1,0 +1,43 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://DOMAIN.com/",
+      "https://www.iana.org/assignments/link-relations/service-doc": [
+        {
+          "href": "https://DOMAIN.com/faq/"
+        }
+      ],
+      "title": "Maine Coon Heaven — Maine Coon Heaven Australia — Ethical Maine Coon Breeders & Pedigree Kittens for Sale"
+    },
+    {
+      "anchor": "https://DOMAIN.com/shop/",
+      "type": "text/html",
+      "title": "Maine Coon Heaven Kitten Catalog"
+    },
+    {
+      "anchor": "https://DOMAIN.com/api/products",
+      "type": "application/json",
+      "title": "Maine Coon Heaven Products API"
+    },
+    {
+      "anchor": "https://DOMAIN.com/api/categories",
+      "type": "application/json",
+      "title": "Maine Coon Heaven Categories API"
+    },
+    {
+      "anchor": "https://DOMAIN.com/api/search",
+      "type": "application/json",
+      "title": "Maine Coon Heaven Search API"
+    },
+    {
+      "anchor": "https://DOMAIN.com/api/mcp",
+      "type": "application/json",
+      "https://www.iana.org/assignments/link-relations/service-desc": [
+        {
+          "href": "https://DOMAIN.com/.well-known/mcp/server-card.json"
+        }
+      ],
+      "title": "Maine Coon Heaven MCP Server"
+    }
+  ]
+}
