@@ -56,7 +56,7 @@ export default async function BlogPostPage({ params }) {
       '@type': 'BlogPosting',
       headline: post.title,
       description: post.excerpt,
-      image: post.image,
+      image: post.image?.startsWith('http') ? post.image : `https://${SITE.domain}${post.image}`,
       datePublished: post.date,
       dateModified: post.date,
       keywords: SITE.keywords.join(', '),

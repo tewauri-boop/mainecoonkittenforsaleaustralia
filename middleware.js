@@ -2,7 +2,9 @@
 import { NextResponse } from 'next/server';
 import { SITE, BRAND, CATEGORIES, PRODUCTS, POSTS, FAQ, SHOP, CONTACT } from './src/config/site.js';
 
-export const config = { matcher: '/:path*' };
+export const config = {
+  matcher: ['/((?!api|_next/static|_next/image|assets|js|robots\\.txt|sitemap\\.xml|.*\\..*).*)'],
+};
 
 function prefersMarkdownOverHtml(accept) {
   let mdQ = -1, htmlQ = -1;

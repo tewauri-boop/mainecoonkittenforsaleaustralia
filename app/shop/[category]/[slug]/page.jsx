@@ -72,7 +72,9 @@ export default async function ProductDetailPage({ params }) {
       '@context': 'https://schema.org',
       '@type': 'Product',
       name: product.name,
-      image: product.images,
+      image: product.images.map((img) =>
+        img.startsWith('http') ? img : `https://${SITE.domain}${img}`
+      ),
       description: product.description,
       sku: product.slug,
       brand: {

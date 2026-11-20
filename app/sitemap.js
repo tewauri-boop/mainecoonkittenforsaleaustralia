@@ -20,7 +20,6 @@ export default function sitemap() {
     { url: `${domain}/about/`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${domain}/blog/`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
     { url: `${domain}/faq/`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${domain}/search/`, lastModified: now, changeFrequency: 'weekly', priority: 0.6 },
     { url: `${domain}/contact/`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
   ];
 

@@ -34,12 +34,20 @@ async function main() {
 
   // 1. public/robots.txt
   const robotsTxt = `User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /search/
 Disallow: /thank-you-contact/
 Disallow: /thank-you-order/
 Disallow: /thank-you-wholesale/
-Sitemap: https://${domain}/sitemap.xml
 
-Content-Signal: search=yes, ai-input=yes, ai-train=no
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+Sitemap: https://${domain}/sitemap.xml
 
 # AI crawlers — welcome to index product and content pages
 User-agent: GPTBot
