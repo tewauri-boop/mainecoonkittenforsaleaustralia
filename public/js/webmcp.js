@@ -11,7 +11,7 @@
           if (query) params.set('q', query);
           if (category) params.set('category', category);
           if (max_price) params.set('max_price', max_price);
-          const res = await fetch(`https://DOMAIN.com/api/search?${params}`);
+          const res = await fetch(`https://mainecoonheaven.com/api/search?${params}`);
           return res.json();
         }
       },
@@ -20,7 +20,7 @@
         description: "Browse kittens by category",
         inputSchema: { type: "object", properties: { category: { type: "string" } } },
         execute: async ({ category }) => {
-          const url = category ? `https://DOMAIN.com/shop/${category}/` : `https://DOMAIN.com/shop/`;
+          const url = category ? `https://mainecoonheaven.com/shop/${category}/` : `https://mainecoonheaven.com/shop/`;
           window.location.href = url;
           return { url };
         }
@@ -40,8 +40,8 @@
         description: "Contact Maine Coon Heaven for kitten questions or adoption inquiries",
         inputSchema: { type: "object", properties: {} },
         execute: async () => {
-          window.location.href = `https://DOMAIN.com/contact/`;
-          return { url: `https://DOMAIN.com/contact/` };
+          window.location.href = `https://mainecoonheaven.com/contact/`;
+          return { url: `https://mainecoonheaven.com/contact/` };
         }
       }
     ]

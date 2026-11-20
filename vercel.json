@@ -7,10 +7,10 @@
       "has": [
         {
           "type": "host",
-          "value": "www.DOMAIN.com"
+          "value": "www.mainecoonheaven.com"
         }
       ],
-      "destination": "https://DOMAIN.com/:path*",
+      "destination": "https://mainecoonheaven.com/:path*",
       "permanent": true
     }
   ],

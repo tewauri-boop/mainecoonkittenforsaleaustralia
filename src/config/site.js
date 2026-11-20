@@ -2,13 +2,13 @@
 export const SITE = {
   name: 'Maine Coon Heaven',
   tagline: 'Maine Coon Heaven Australia — Ethical Maine Coon Breeders & Pedigree Kittens for Sale',
-  domain: 'DOMAIN.com',           // Rule 9: ONE place. Domain pending -> DOMAIN.com
+  domain: 'mainecoonheaven.com',
   locale: 'en-AU',
   currency: 'AUD',
   target: 'vercel',
   primaryColor: '#C59B4B',        // Luxury warm champagne gold
   darkColor: '#16161A',           // Deep obsidian
-  gscVerification: 'pending',
+  gscVerification: 'xQfgqt2pLKHa80TS3m25eIY8rwer5l-F6zFtephXEMI',
   indexNowKey: 'mch-indexnow-key-2026',
   cartKey: 'mm-cart',
   keywords: [

@@ -3,20 +3,20 @@
   "protocol_version": "1.0",
   "spec": "https://ucp.dev/specification/overview/",
   "schema": "https://ucp.dev/schema/v1.json",
-  "site": "https://DOMAIN.com",
+  "site": "https://mainecoonheaven.com",
   "name": "Maine Coon Heaven",
   "description": "Maine Coon Heaven Australia is a trusted registered Maine Coon breeder in Sydney, NSW, offering purebred Maine Coon kittens for sale to loving homes in Sydney, Melbourne, Canberra, Perth, Adelaide, and across Australia.",
   "services": [
     {
       "id": "product-catalog",
       "type": "catalog",
-      "url": "https://DOMAIN.com/shop/",
+      "url": "https://mainecoonheaven.com/shop/",
       "description": "Full kitten catalog"
     },
     {
       "id": "mcp-server",
       "type": "mcp",
-      "url": "https://DOMAIN.com/api/mcp",
+      "url": "https://mainecoonheaven.com/api/mcp",
       "description": "MCP Streamable HTTP server"
     },
     {
@@ -34,13 +34,13 @@
     "mcp"
   ],
   "endpoints": {
-    "mcp": "https://DOMAIN.com/api/mcp",
-    "catalog": "https://DOMAIN.com/shop/",
-    "contact": "https://DOMAIN.com/contact/",
-    "agent_skills": "https://DOMAIN.com/.well-known/agent-skills/index.json",
-    "mcp_server_card": "https://DOMAIN.com/.well-known/mcp/server-card.json",
-    "api_catalog": "https://DOMAIN.com/.well-known/api-catalog",
-    "llms_txt": "https://DOMAIN.com/llms.txt"
+    "mcp": "https://mainecoonheaven.com/api/mcp",
+    "catalog": "https://mainecoonheaven.com/shop/",
+    "contact": "https://mainecoonheaven.com/contact/",
+    "agent_skills": "https://mainecoonheaven.com/.well-known/agent-skills/index.json",
+    "mcp_server_card": "https://mainecoonheaven.com/.well-known/mcp/server-card.json",
+    "api_catalog": "https://mainecoonheaven.com/.well-known/api-catalog",
+    "llms_txt": "https://mainecoonheaven.com/llms.txt"
   },
   "currency": "AUD",
   "minimum_order_usd": 0,

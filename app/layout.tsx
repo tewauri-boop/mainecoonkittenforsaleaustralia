@@ -47,6 +47,10 @@ export const metadata: Metadata = {
     images: ['/assets/aistudio/cat_780b12b8.jpg'],
   },
   robots: 'index, follow',
+  verification:
+    SITE.gscVerification && SITE.gscVerification !== 'pending'
+      ? { google: SITE.gscVerification }
+      : undefined,
   other: {
     'og:updated_time': new Date().toISOString(),
     'geo.region': 'AU-NSW',

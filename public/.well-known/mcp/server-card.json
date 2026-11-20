@@ -4,7 +4,7 @@
     "name": "Maine Coon Heaven",
     "version": "1.0.0",
     "description": "Maine Coon Heaven Australia is a trusted registered Maine Coon breeder in Sydney, NSW, offering purebred Maine Coon kittens for sale to loving homes in Sydney, Melbourne, Canberra, Perth, Adelaide, and across Australia.",
-    "homepage": "https://DOMAIN.com",
+    "homepage": "https://mainecoonheaven.com",
     "contact": {
       "email": "mainecoonheavenau00@gmail.com",
       "whatsapp": "+61 401 667 279"
@@ -12,7 +12,7 @@
   },
   "transport": {
     "type": "streamable-http",
-    "endpoint": "https://DOMAIN.com/api/mcp"
+    "endpoint": "https://mainecoonheaven.com/api/mcp"
   },
   "capabilities": {
     "tools": [
@@ -85,12 +85,12 @@
       {
         "name": "product-catalog",
         "description": "Full kitten catalog",
-        "uri": "https://DOMAIN.com/shop/"
+        "uri": "https://mainecoonheaven.com/shop/"
       },
       {
         "name": "blog",
         "description": "Maine Coon care and breed guides",
-        "uri": "https://DOMAIN.com/blog/"
+        "uri": "https://mainecoonheaven.com/blog/"
       }
     ],
     "commerce": {

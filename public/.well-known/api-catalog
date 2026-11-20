@@ -1,40 +1,40 @@
 {
   "linkset": [
     {
-      "anchor": "https://DOMAIN.com/",
+      "anchor": "https://mainecoonheaven.com/",
       "https://www.iana.org/assignments/link-relations/service-doc": [
         {
-          "href": "https://DOMAIN.com/faq/"
+          "href": "https://mainecoonheaven.com/faq/"
         }
       ],
       "title": "Maine Coon Heaven — Maine Coon Heaven Australia — Ethical Maine Coon Breeders & Pedigree Kittens for Sale"
     },
     {
-      "anchor": "https://DOMAIN.com/shop/",
+      "anchor": "https://mainecoonheaven.com/shop/",
       "type": "text/html",
       "title": "Maine Coon Heaven Kitten Catalog"
     },
     {
-      "anchor": "https://DOMAIN.com/api/products",
+      "anchor": "https://mainecoonheaven.com/api/products",
       "type": "application/json",
       "title": "Maine Coon Heaven Products API"
     },
     {
-      "anchor": "https://DOMAIN.com/api/categories",
+      "anchor": "https://mainecoonheaven.com/api/categories",
       "type": "application/json",
       "title": "Maine Coon Heaven Categories API"
     },
     {
-      "anchor": "https://DOMAIN.com/api/search",
+      "anchor": "https://mainecoonheaven.com/api/search",
       "type": "application/json",
       "title": "Maine Coon Heaven Search API"
     },
     {
-      "anchor": "https://DOMAIN.com/api/mcp",
+      "anchor": "https://mainecoonheaven.com/api/mcp",
       "type": "application/json",
       "https://www.iana.org/assignments/link-relations/service-desc": [
         {
-          "href": "https://DOMAIN.com/.well-known/mcp/server-card.json"
+          "href": "https://mainecoonheaven.com/.well-known/mcp/server-card.json"
         }
       ],
       "title": "Maine Coon Heaven MCP Server"

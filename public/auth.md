@@ -8,12 +8,12 @@ No authentication required. All resources are publicly accessible.
 ## Public Resources
 | Resource | URL |
 |---|---|
-| Product Catalog | https://DOMAIN.com/shop/ |
-| Blog | https://DOMAIN.com/blog/ |
-| FAQ | https://DOMAIN.com/faq/ |
-| Products API | https://DOMAIN.com/api/products |
-| Search API | https://DOMAIN.com/api/search |
-| MCP Server | https://DOMAIN.com/api/mcp |
+| Product Catalog | https://mainecoonheaven.com/shop/ |
+| Blog | https://mainecoonheaven.com/blog/ |
+| FAQ | https://mainecoonheaven.com/faq/ |
+| Products API | https://mainecoonheaven.com/api/products |
+| Search API | https://mainecoonheaven.com/api/search |
+| MCP Server | https://mainecoonheaven.com/api/mcp |
 
 ## Authentication
 

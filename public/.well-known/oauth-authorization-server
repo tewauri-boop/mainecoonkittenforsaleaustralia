@@ -1,5 +1,5 @@
 {
-  "issuer": "https://DOMAIN.com",
+  "issuer": "https://mainecoonheaven.com",
   "authorization_endpoint": null,
   "token_endpoint": null,
   "jwks_uri": null,
@@ -8,13 +8,13 @@
   "scopes_supported": [],
   "note": "Maine Coon Heaven has no protected APIs. All resources publicly accessible.",
   "public_resources": [
-    "https://DOMAIN.com/shop/",
-    "https://DOMAIN.com/blog/",
-    "https://DOMAIN.com/faq/",
-    "https://DOMAIN.com/llms.txt",
-    "https://DOMAIN.com/.well-known/api-catalog",
-    "https://DOMAIN.com/.well-known/agent-skills/index.json",
-    "https://DOMAIN.com/.well-known/mcp/server-card.json"
+    "https://mainecoonheaven.com/shop/",
+    "https://mainecoonheaven.com/blog/",
+    "https://mainecoonheaven.com/faq/",
+    "https://mainecoonheaven.com/llms.txt",
+    "https://mainecoonheaven.com/.well-known/api-catalog",
+    "https://mainecoonheaven.com/.well-known/agent-skills/index.json",
+    "https://mainecoonheaven.com/.well-known/mcp/server-card.json"
   ],
   "agent_auth": {
     "register_uri": null,

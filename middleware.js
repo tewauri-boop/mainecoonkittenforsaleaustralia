@@ -22,7 +22,7 @@ function prefersMarkdownOverHtml(accept) {
 function eligiblePath(pathname) {
   if (!pathname) return false;
   if (pathname.startsWith('/api/') || pathname.startsWith('/_next/') || pathname.startsWith('/js/')) return false;
-  if (pathname.endsWith('.txt') || pathname.endsWith('.json') || pathname.endsWith('.xml') || pathname.endsWith('.png') || pathname.endsWith('.jpg') || pathname.endsWith('.ico')) return false;
+  if (pathname.endsWith('.txt') || pathname.endsWith('.json') || pathname.endsWith('.xml') || pathname.endsWith('.html') || pathname.endsWith('.png') || pathname.endsWith('.jpg') || pathname.endsWith('.ico')) return false;
   return true;
 }
 
