@@ -246,7 +246,7 @@ export async function POST(request) {
 
     if (name === 'get_policies') {
       const policies = {
-        reservationDeposit: `$${SHOP.reservationDeposit || 750} ${SITE.currency} standard ($1,000 ${SITE.currency} for Shadow and Greenbean)`,
+        reservationDeposit: `$${SHOP.reservationDeposit || 750} ${SITE.currency} standard ($1,000 ${SITE.currency} for Shadow and Stormy)`,
         refundPolicy: SHOP.refundPolicy,
         transport: 'Complimentary safe domestic flight transport to all Australian capital cities',
         healthScreening: '100% DNA Tested for HCM, SMA, and PKDef feline genetic mutations',

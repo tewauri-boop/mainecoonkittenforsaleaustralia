@@ -107,7 +107,7 @@ ${BRAND.description}
 Located in ${BRAND.foundingLocation}, founded in ${BRAND.foundingYear}. All kittens are 100% DNA health tested (HCM, SMA, PKDef clear), raised underfoot, and placed with full certified pedigree papers.
 
 ## Key Policies
-- Reservation Deposit: $${SHOP.reservationDeposit || 750} ${currency} standard ($1,000 ${currency} for Shadow & Greenbean), applied toward total adoption fee
+- Reservation Deposit: $${SHOP.reservationDeposit || 750} ${currency} standard ($1,000 ${currency} for Shadow & Stormy), applied toward total adoption fee
 - Refund Policy: ${SHOP.refundPolicy}
 - Minimum Adoption: $${minOrder} ${currency}
 - Transport: Complimentary safe flight transport and local pickup for Sydney, Melbourne, Canberra, Perth, NSW, Adelaide, Brisbane, and Hobart

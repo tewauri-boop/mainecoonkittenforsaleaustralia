@@ -109,7 +109,7 @@ export const CATEGORIES = [
   {
     slug: 'male-kittens',
     name: 'Male Maine Coon Kittens',
-    description: 'Available boys: Shadow (Black Smoke, 8 Weeks), Greenbean (Silver-Gray Tabby, 5 Weeks), and Rocky (Ginger Red Tabby Polydactyl, 8 Weeks).',
+    description: 'Available boys: Shadow (Black Smoke, 8 Weeks), Stormy (Black, Ginger & White Calico, 5 Weeks), and Rocky (Ginger Red Tabby Polydactyl, 8 Weeks).',
     image: '/assets/aistudio/IMG_0143_d5b8df73.jpeg',
   },
   {
@@ -148,21 +148,22 @@ export const PRODUCTS = [
     readyDate: 'Ready for Adoption Now',
   },
   {
-    slug: 'greenbean-gray-male',
-    name: 'Greenbean — Silver-Gray Tabby Boy',
+    slug: 'stormy-calico-kitten',
+    name: 'Stormy — Black, Ginger & White Calico',
     price: 2500,
     deposit: 1000,
     category: 'male-kittens',
     categories: ['male-kittens'],
-    shortDescription: 'Fluffy dove-gray & silver tabby boy with soft gray-silver marbling, a snowy-cream chest ruff, pale frosted paws, and expressive slate-blue eyes.',
-    description: 'Greenbean is an endearing Silver-Gray Tabby boy dressed in a soft dove-gray and frosty silver coat accented by gentle charcoal tabby markings, a snowy-white chin and fluffy cream-silver chest ruff, and pale frosted gray paws. His expressive slate-blue eyes and dark-rimmed rosy nose give him an irresistible expression. A spirited adventurer who loves feather wands and evening snuggles, Greenbean comes with a pedigree ancestry certificate, health record booklet, desexing, microchip, and customized kitten starter pack.',
+    shortDescription: '5-week-old tri-color calico kitten with jet-black & copper-ginger markings, snowy-white nose blaze, white paws with pink beans, black lynx ear tips, and bright sky-blue eyes.',
+    description: 'Stormy is a striking 5-week-old tri-color Calico Maine Coon kitten showcased in these exact photos at just 5 weeks of age—tiny enough to fit comfortably in one hand with classic baby sky-blue eyes and a fluffy double-textured coat. Stormy features a bold jet-black mask over the left eye and lower back, a warm copper-ginger patch over the right cheek and shoulder flank, and an immaculate snowy-white facial blaze blending into fluffy white whisker pads, chin, chest, and white boots with bubble-gum pink nose leather and pink toe beans. Tall jet-black ears crowned with long lynx ear tips complete the classic European Maine Coon look. Comes with pedigree ancestry certificate, health record booklet, desexing, microchip, and customized kitten starter pack when ready to depart.',
     badge: 'Available',
     images: [
-      '/assets/aistudio/IMG_0166_b41d4ca2.JPG',
-      '/assets/aistudio/IMG_0167_026f75c3.JPG'
+      '/assets/aistudio/IMG_0211_3873a41a.JPG',
+      '/assets/aistudio/IMG_0214_bb402cc5.JPG',
+      '/assets/aistudio/IMG_0209_a4b65639.JPG'
     ],
     featured: true,
-    color: 'Silver-Gray Tabby',
+    color: 'Black, Ginger & White Calico',
     gender: 'Male',
     age: '5 Weeks',
     readyDate: 'Ready for Adoption Now',
@@ -277,7 +278,7 @@ export const POSTS = [
 When looking to welcome a purebred Maine Coon kitten into your Australian home, understanding the true cost and what it reflects is essential for making an informed, ethical decision.
 
 ### Average Maine Coon Kitten Prices in Australia
-At Maine Coon Heaven, our pedigreed companion Maine Coon kittens range from $1,200 to $3,500 AUD, making certified healthy champion-line gentle giants accessible to loving family homes. Rare coat colors or champion-line kittens range up to $3,500 AUD, and a reservation deposit ($750 AUD standard, or $1,000 AUD for Shadow and Greenbean) secures your chosen kitten and applies directly toward the total adoption fee.
+At Maine Coon Heaven, our pedigreed companion Maine Coon kittens range from $1,200 to $3,500 AUD, making certified healthy champion-line gentle giants accessible to loving family homes. Rare coat colors or champion-line kittens range up to $3,500 AUD, and a reservation deposit ($750 AUD standard, or $1,000 AUD for Shadow and Stormy) secures your chosen kitten and applies directly toward the total adoption fee.
 
 ### What Is Included in the Adoption Price?
 A transparent, ethical cattery like Maine Coon Heaven includes significant health and veterinary investments in the upfront fee:
@@ -371,11 +372,11 @@ export const PAGES = {
 export const FAQ = [
   {
     question: 'How can I buy a Maine Coon in Australia?',
-    answer: 'To buy a Maine Coon cat in Australia through Maine Coon Heaven Australia, browse our available Maine Coon kittens for sale, select Reserve Kitten or contact our Sydney cattery on WhatsApp, confirm your adoption agreement with a reservation deposit ($750 AUD standard or $1,000 AUD for Shadow and Greenbean), and schedule collection or free insured transport to Sydney, Melbourne, Canberra, Perth, NSW, or Adelaide.'
+    answer: 'To buy a Maine Coon cat in Australia through Maine Coon Heaven Australia, browse our available Maine Coon kittens for sale, select Reserve Kitten or contact our Sydney cattery on WhatsApp, confirm your adoption agreement with a reservation deposit ($750 AUD standard or $1,000 AUD for Shadow and Stormy), and schedule collection or free insured transport to Sydney, Melbourne, Canberra, Perth, NSW, or Adelaide.'
   },
   {
     question: 'How much is a Maine Coon kitten in Australia?',
-    answer: 'Purebred, pedigree Maine Coon kittens in Australia from Maine Coon Heaven range between $1,200 and $3,500 AUD. A reservation deposit ($750 AUD, or $1,000 AUD for Shadow and Greenbean) holds your chosen kitten and goes toward your total adoption fee, which includes complete desexing, microchipping, full vaccinations, DNA health screening for HCM/SMA/PKDef, official pedigree papers, and nationwide transport.'
+    answer: 'Purebred, pedigree Maine Coon kittens in Australia from Maine Coon Heaven range between $1,200 and $3,500 AUD. A reservation deposit ($750 AUD, or $1,000 AUD for Shadow and Stormy) holds your chosen kitten and goes toward your total adoption fee, which includes complete desexing, microchipping, full vaccinations, DNA health screening for HCM/SMA/PKDef, official pedigree papers, and nationwide transport.'
   },
   {
     question: 'Do you deliver Maine Coon kittens to Sydney, Melbourne, Canberra, Perth, NSW & Adelaide?',
