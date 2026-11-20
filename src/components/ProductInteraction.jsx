@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { ShoppingBag, MessageCircle, Check, Sparkles, ShieldCheck } from 'lucide-react';
-import { SITE, CONTACT, getKittenDeposit } from '@/src/config/site.js';
+import { SITE, getKittenDeposit, getWhatsAppUrl } from '@/src/config/site.js';
 
 export default function ProductInteraction({ product }) {
   const [selectedImage, setSelectedImage] = useState(product.images[0]);
@@ -10,9 +10,8 @@ export default function ProductInteraction({ product }) {
 
   const reservationDeposit = getKittenDeposit(product);
   const remainingBalance = Math.max(0, product.price - reservationDeposit);
-  const cleanPhone = CONTACT.whatsapp.replace(/[^\d+]/g, '');
   const whatsappMessage = `Hello Maine Coon Heaven! I would like to reserve ${product.name} (Total Adoption Fee: $${product.price.toLocaleString()} ${SITE.currency}, Reservation Deposit: $${reservationDeposit.toLocaleString()} ${SITE.currency}). Please let me know how to proceed.`;
-  const whatsappUrl = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(whatsappMessage)}`;
+  const whatsappUrl = getWhatsAppUrl(whatsappMessage);
 
   const handleAddToCart = () => {
     try {
@@ -37,8 +36,9 @@ export default function ProductInteraction({ product }) {
       }
 
       localStorage.setItem(SITE.cartKey, JSON.stringify(currentCart));
-      // Dispatch storage event to notify other components
+      // Dispatch storage and cart open events to notify StoreShell and open inquiry drawer
       window.dispatchEvent(new Event('storage'));
+      window.dispatchEvent(new CustomEvent('mch-open-cart'));
       setAdded(true);
       setTimeout(() => setAdded(false), 3000);
     } catch (e) {

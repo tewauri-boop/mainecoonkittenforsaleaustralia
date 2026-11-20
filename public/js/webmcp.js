@@ -30,7 +30,7 @@
         description: "Initiate a WhatsApp kitten reservation. Free delivery across Australia. Human completes.",
         inputSchema: { type: "object", properties: { message: { type: "string" } } },
         execute: async ({ message }) => {
-          const url = message ? `https://wa.me/+61401667279?text=${encodeURIComponent(message)}` : `https://wa.me/+61401667279`;
+          const url = message ? `https://wa.me/61401667279?text=${encodeURIComponent(message)}` : `https://wa.me/61401667279`;
           window.open(url, '_blank');
           return { url };
         }

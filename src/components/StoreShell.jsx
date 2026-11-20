@@ -37,8 +37,17 @@ export default function StoreShell({ children }) {
       }
     };
 
+    const handleOpenCart = () => {
+      handleStorageChange();
+      setIsCartOpen(true);
+    };
+
     window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
+    window.addEventListener('mch-open-cart', handleOpenCart);
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('mch-open-cart', handleOpenCart);
+    };
   }, []);
 
   const totalItems = mounted ? cart.reduce((total, item) => total + item.qty, 0) : 0;

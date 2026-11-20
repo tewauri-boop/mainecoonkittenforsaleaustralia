@@ -273,7 +273,7 @@ export async function POST(request) {
     }
 
     if (name === 'create_order_draft') {
-      const cleanPhone = CONTACT.whatsapp.replace(/[^\d+]/g, '');
+      const cleanPhone = CONTACT.whatsapp.replace(/\D/g, '');
       const items = args.items || [];
       const itemText = items.map((i) => `${i.name || i.slug} ($${i.price || ''})`).join(', ');
       const message = `Hello Maine Coon Heaven! I would like to inquire about reserving: ${itemText}. Notes: ${args.notes || 'None'}`;

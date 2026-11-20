@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { ArrowRight, HelpCircle, MessageCircle, ShieldCheck } from 'lucide-react';
-import { SITE, FAQ, CONTACT, SHOP } from '@/src/config/site.js';
+import { SITE, FAQ, CONTACT, SHOP, getWhatsAppUrl } from '@/src/config/site.js';
 import JsonLd from '@/src/components/JsonLd.jsx';
 import FaqAccordion from '@/src/components/FaqAccordion.jsx';
 
@@ -124,7 +124,7 @@ export default function FAQPage() {
             </p>
             <div className="pt-2 flex flex-col sm:flex-row justify-center gap-3">
               <a
-                href={`https://wa.me/${CONTACT.whatsapp.replace(/[^\d+]/g, '')}`}
+                href={getWhatsAppUrl('Hello Maine Coon Heaven! I have a question about upcoming litters.')}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-6 py-3 bg-[#25D366] text-white text-xs font-semibold rounded-xl hover:bg-[#20BE5B] transition-colors inline-flex items-center justify-center gap-2"

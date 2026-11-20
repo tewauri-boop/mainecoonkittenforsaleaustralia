@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { X, Trash2, Plus, Minus, MessageCircle, Send, ShieldCheck, Sparkles } from 'lucide-react';
-import { SITE, SHOP, CONTACT, getKittenDeposit } from '@/src/config/site.js';
+import { X, Trash2, Plus, Minus, MessageCircle, Send, Mail, ShieldCheck, Sparkles } from 'lucide-react';
+import { SITE, SHOP, CONTACT, getKittenDeposit, getWhatsAppUrl } from '@/src/config/site.js';
 
 export default function CartDrawer({ isOpen, onClose, cart, setCart }) {
   const [useCrypto, setUseCrypto] = useState(false);
@@ -68,7 +68,6 @@ export default function CartDrawer({ isOpen, onClose, cart, setCart }) {
   const remainingBalance = Math.max(0, finalTotal - reservationDepositTotal);
 
   // Build WhatsApp reservation link
-  const cleanPhone = CONTACT.whatsapp.replace(/[^\d+]/g, '');
   const itemsSummary = cart
     .map(
       (item) =>
@@ -77,7 +76,11 @@ export default function CartDrawer({ isOpen, onClose, cart, setCart }) {
     .join('\n');
   const paymentMethodNote = useCrypto ? `Payment: Cryptocurrency (10% Discount applied: -$${cryptoDiscountAmount.toLocaleString()})` : 'Payment: Bank Transfer / PayID';
   const whatsappMessage = `Hello Maine Coon Heaven! I would like to reserve the following kitten(s):\n\n${itemsSummary}\n\nTotal Adoption Fee: $${finalTotal.toLocaleString()} ${SITE.currency}\nReservation Deposit Due: $${reservationDepositTotal.toLocaleString()} ${SITE.currency}\nRemaining Balance Before Dispatch: $${remainingBalance.toLocaleString()} ${SITE.currency}\n${paymentMethodNote}\nFree Nationwide Delivery: Yes\nPlease confirm availability and adoption agreement.`;
-  const whatsappUrl = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(whatsappMessage)}`;
+  const whatsappUrl = getWhatsAppUrl(whatsappMessage);
+
+  const emailSubject = `New Maine Coon Kitten Inquiry — ${cart.map((i) => i.name).join(', ')}`;
+  const emailBody = `Hello Maine Coon Heaven Australia,\n\nI would like to send a new inquiry for the following available kitten(s) from my reservation cart:\n\n${itemsSummary}\n\nTotal Adoption Fee: $${finalTotal.toLocaleString()} ${SITE.currency}\nReservation Deposit Due: $${reservationDepositTotal.toLocaleString()} ${SITE.currency}\nRemaining Balance Before Dispatch: $${remainingBalance.toLocaleString()} ${SITE.currency}\n${paymentMethodNote}\nFree Nationwide Delivery: Yes\n\nPlease confirm availability and send adoption details.\n\nMy Name:\nMy Phone:\nMy City / State (Australia):\n`;
+  const mailtoUrl = `mailto:${CONTACT.email}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
 
   if (!isOpen) return null;
 
@@ -102,14 +105,25 @@ export default function CartDrawer({ isOpen, onClose, cart, setCart }) {
                 {cart.reduce((total, i) => total + i.qty, 0)}
               </span>
             </div>
-            <button
-              type="button"
-              onClick={onClose}
-              className="p-2 text-[#7A746E] hover:text-[#16161A] rounded-lg hover:bg-[#EFEAE2] transition-colors focus:outline-none focus:ring-2 focus:ring-[#C59B4B]"
-              aria-label="Close cart drawer"
-            >
-              <X className="w-5 h-5" />
-            </button>
+            <div className="flex items-center gap-2">
+              {cart.length > 0 && (
+                <button
+                  type="button"
+                  onClick={clearCart}
+                  className="text-[11px] font-medium text-[#7A746E] hover:text-red-600 px-2 py-1 rounded transition-colors"
+                >
+                  Clear
+                </button>
+              )}
+              <button
+                type="button"
+                onClick={onClose}
+                className="p-2 text-[#7A746E] hover:text-[#16161A] rounded-lg hover:bg-[#EFEAE2] transition-colors focus:outline-none focus:ring-2 focus:ring-[#C59B4B]"
+                aria-label="Close cart drawer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
           </div>
 
           {/* Body items */}
@@ -273,26 +287,35 @@ export default function CartDrawer({ isOpen, onClose, cart, setCart }) {
 
               {/* Action Buttons */}
               <div className="space-y-2 pt-2">
-                {/* Primary: WhatsApp Checkout */}
+                {/* Primary: Redirect to Email as New Inquiry */}
+                <a
+                  href={mailtoUrl}
+                  className="w-full flex items-center justify-center gap-2 py-3.5 px-4 bg-[#C59B4B] hover:bg-[#D4AF37] text-[#16161A] rounded-xl font-bold text-sm shadow-md transition-transform active:scale-[0.98]"
+                >
+                  <Mail className="w-4 h-4" />
+                  <span>Send New Inquiry to Email</span>
+                </a>
+
+                {/* Secondary: Pre-filled Online Inquiry Form */}
+                <Link
+                  href="/contact/?from=cart"
+                  onClick={onClose}
+                  className="w-full flex items-center justify-center gap-2 py-3 px-4 bg-[#16161A] hover:bg-[#2A2B30] text-white rounded-xl font-semibold text-xs transition-colors"
+                >
+                  <Send className="w-3.5 h-3.5" />
+                  <span>Complete Inquiry Form ({CONTACT.email})</span>
+                </Link>
+
+                {/* Tertiary: WhatsApp Checkout */}
                 <a
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full flex items-center justify-center gap-2 py-3.5 px-4 bg-[#25D366] hover:bg-[#20BE5B] text-white rounded-xl font-semibold text-sm shadow-md transition-transform active:scale-[0.98]"
+                  className="w-full flex items-center justify-center gap-2 py-3 px-4 bg-[#25D366] hover:bg-[#20BE5B] text-white rounded-xl font-semibold text-xs shadow-sm transition-colors"
                 >
                   <MessageCircle className="w-4 h-4" />
                   <span>Reserve on WhatsApp</span>
                 </a>
-
-                {/* Secondary: Web Order Form */}
-                <Link
-                  href="/contact/"
-                  onClick={onClose}
-                  className="w-full flex items-center justify-center gap-2 py-3 px-4 bg-[#16161A] hover:bg-[#2A2B30] text-white rounded-xl font-medium text-xs transition-colors"
-                >
-                  <Send className="w-3.5 h-3.5" />
-                  <span>Submit Inquiry Form</span>
-                </Link>
               </div>
 
               <div className="space-y-1.5 text-center pt-1">

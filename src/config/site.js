@@ -44,13 +44,19 @@ export const SITE = {
 }
 
 export const CONTACT = {
-  email: 'mainecoonheavenus@gmail.com',
-  chatEmail: 'mainecoonheavenau@gmail.com',
+  email: 'mainecoonheavenau00@gmail.com',
+  chatEmail: 'mainecoonheavenau00@gmail.com',
   phone: '+61 401 667 279',
   whatsapp: '+61 401 667 279',
   address: 'Sydney NSW, Australia',
   hq: 'Sydney, Australia',
   country: 'Australia',
+}
+
+export function getWhatsAppUrl(message) {
+  const digits = (CONTACT.whatsapp || '61401667279').replace(/\D/g, '');
+  const base = `https://wa.me/${digits}`;
+  return message ? `${base}?text=${encodeURIComponent(message)}` : base;
 }
 
 export const SHOP = {
@@ -73,7 +79,7 @@ export const FORMS = {
 export const CHAT = {
   channels: [
     { type: 'whatsapp', value: '+61401667279', label: 'WhatsApp (+61 401 667 279)' },
-    { type: 'email', value: 'mainecoonheavenau@gmail.com', label: 'Email Breeder' },
+    { type: 'email', value: 'mainecoonheavenau00@gmail.com', label: 'Email Breeder' },
     { type: 'phone', value: '+61401667279', label: 'Call (+61 401 667 279)' },
   ],
   widget: null, // Zero 3rd-party widget JS for peak performance

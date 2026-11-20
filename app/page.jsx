@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { ShieldCheck, Plane, Award, Heart, Sparkles, Check, ArrowRight, Star, HelpCircle, BookOpen } from 'lucide-react';
-import { SITE, BRAND, CATEGORIES, PRODUCTS, POSTS, FAQ, SHOP, CONTACT, REVIEWS, TRUSTPILOT, getKittensByCategory } from '@/src/config/site.js';
+import { SITE, BRAND, CATEGORIES, PRODUCTS, POSTS, FAQ, SHOP, CONTACT, REVIEWS, TRUSTPILOT, getKittensByCategory, getWhatsAppUrl } from '@/src/config/site.js';
 import JsonLd from '@/src/components/JsonLd.jsx';
 import SmartImage from '@/src/components/SmartImage.jsx';
 import HeroKittenSlider from '@/src/components/HeroKittenSlider.jsx';
@@ -653,7 +653,7 @@ export default function HomePage() {
                 Contact Us
               </Link>
               <a
-                href={`https://wa.me/${CONTACT.whatsapp.replace(/[^\d+]/g, '')}`}
+                href={getWhatsAppUrl('Hello Maine Coon Heaven! I have a question about adopting a Maine Coon kitten.')}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-5 py-2.5 bg-[#25D366] text-white text-xs font-semibold rounded-lg hover:bg-[#20BE5B] transition-colors"

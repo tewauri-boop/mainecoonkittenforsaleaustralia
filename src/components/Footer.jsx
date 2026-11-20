@@ -1,6 +1,6 @@
 // src/components/Footer.jsx - WCAG AA semantic footer with entity-encoded emails
 import Link from 'next/link';
-import { SITE, CONTACT, BRAND, CATEGORIES, SHOP } from '@/src/config/site.js';
+import { SITE, CONTACT, BRAND, CATEGORIES, SHOP, getWhatsAppUrl } from '@/src/config/site.js';
 import { ShieldCheck, Plane, Award, HeartHandshake } from 'lucide-react';
 
 export default function Footer() {
@@ -76,7 +76,17 @@ export default function Footer() {
             </p>
             <div className="space-y-1 text-xs text-[#C5BFB8] pt-2">
               <p><strong className="text-white">Location:</strong> {CONTACT.address}</p>
-              <p><strong className="text-white">WhatsApp:</strong> {CONTACT.whatsapp}</p>
+              <p>
+                <strong className="text-white">WhatsApp:</strong>{' '}
+                <a
+                  href={getWhatsAppUrl('Hello Maine Coon Heaven! I would like to inquire about available kittens.')}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-[#25D366] underline decoration-[#444] underline-offset-4"
+                >
+                  {CONTACT.whatsapp}
+                </a>
+              </p>
               <p>
                 <strong className="text-white">Email:</strong>{' '}
                 <a

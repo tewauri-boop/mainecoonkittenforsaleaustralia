@@ -1,50 +1,157 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { MessageCircle, Phone, Mail, MapPin, Send, ShieldCheck, Check } from 'lucide-react';
-import { SITE, CONTACT, FORMS, PRODUCTS } from '@/src/config/site.js';
+import { useRouter } from 'next/navigation';
+import { MessageCircle, Phone, Mail, MapPin, Send, ShieldCheck, ShoppingBag, Trash2 } from 'lucide-react';
+import { SITE, CONTACT, FORMS, PRODUCTS, SHOP, getKittenDeposit, getWhatsAppUrl } from '@/src/config/site.js';
 
 export default function ContactPage() {
+  const router = useRouter();
   const [submitting, setSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+  const [name, setName] = useState('');
   const [replyTo, setReplyTo] = useState('');
+  const [phone, setPhone] = useState('');
+  const [destinationCity, setDestinationCity] = useState('');
+  const [selectedKitten, setSelectedKitten] = useState('General Inquiry');
+  const [message, setMessage] = useState('');
+  const [messageTouched, setMessageTouched] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
+  const [useCrypto, setUseCrypto] = useState(false);
 
   const cleanPhone = CONTACT.whatsapp.replace(/[^\d+]/g, '');
+
+  useEffect(() => {
+    const syncCartToForm = () => {
+      try {
+        const stored = localStorage.getItem(SITE.cartKey);
+        const parsed = stored ? JSON.parse(stored) : [];
+        const items = Array.isArray(parsed) ? parsed : [];
+        setCartItems(items);
+
+        if (items.length > 0) {
+          const summaryValue =
+            items.length === 1
+              ? items[0].name
+              : `Cart Kittens (${items.length}): ${items.map((i) => i.name).join(', ')}`;
+          setSelectedKitten(summaryValue);
+
+          if (!messageTouched) {
+            const lines = items
+              .map(
+                (i) =>
+                  `- ${i.name} (${i.qty || 1}x @ $${Number(i.price || 0).toLocaleString()} ${SITE.currency}, Deposit: $${getKittenDeposit(i).toLocaleString()} ${SITE.currency})`
+              )
+              .join('\n');
+            setMessage(
+              `Hello Maine Coon Heaven Australia,\n\nI would like to submit a new inquiry for the kitten(s) in my cart:\n${lines}\n\nPlease confirm availability, health records, and next steps for adoption.`
+            );
+          }
+        }
+      } catch (err) {
+        console.error('Error syncing cart to contact inquiry:', err);
+      }
+    };
+
+    syncCartToForm();
+    window.addEventListener('storage', syncCartToForm);
+    return () => window.removeEventListener('storage', syncCartToForm);
+  }, [messageTouched]);
+
+  const subtotal = cartItems.reduce((sum, item) => sum + item.price * (item.qty || 1), 0);
+  const cryptoDiscountAmount = useCrypto ? Math.round((subtotal * SHOP.cryptoDiscount) / 100) : 0;
+  const finalTotal = subtotal - cryptoDiscountAmount;
+  const depositTotal = cartItems.reduce(
+    (sum, item) => sum + getKittenDeposit(item) * (item.qty || 1),
+    0
+  );
+
+  const handleRemoveCartItem = (slug) => {
+    const next = cartItems.filter((i) => i.slug !== slug);
+    setCartItems(next);
+    try {
+      localStorage.setItem(SITE.cartKey, JSON.stringify(next));
+      window.dispatchEvent(new Event('storage'));
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const directEmailSubject =
+    cartItems.length > 0
+      ? `New Maine Coon Kitten Inquiry — ${cartItems.map((i) => i.name).join(', ')}`
+      : `New Maine Coon Kitten Inquiry${selectedKitten && selectedKitten !== 'General Inquiry' ? ` — ${selectedKitten}` : ''}`;
+
+  const directEmailBody = [
+    `Hello Maine Coon Heaven Australia,`,
+    ``,
+    `Name: ${name || '(Your Name)'}`,
+    `Email: ${replyTo || '(Your Email)'}`,
+    `Phone: ${phone || '(Your Phone)'}`,
+    `City / State: ${destinationCity || '(Your City / State)'}`,
+    `Selected Kitten(s): ${selectedKitten}`,
+    cartItems.length > 0
+      ? `Total Adoption Fee: $${finalTotal.toLocaleString()} ${SITE.currency}${useCrypto ? ' (10% Crypto Discount)' : ''}\nReservation Deposit Due: $${depositTotal.toLocaleString()} ${SITE.currency}`
+      : null,
+    ``,
+    message || 'Please share availability and next steps for adopting a Maine Coon kitten.',
+  ]
+    .filter((line) => line !== null)
+    .join('\n');
+
+  const directMailtoUrl = `mailto:${CONTACT.email}?subject=${encodeURIComponent(directEmailSubject)}&body=${encodeURIComponent(directEmailBody)}`;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
     setErrorMsg('');
 
-    const form = e.target;
-    const accessKey = form.querySelector('[name="access_key"]')?.value || '';
-
-    // WebForge Key-pending fallback: if key is empty or 'pending', skip gracefully to thank-you
-    if (!accessKey || accessKey === 'pending' || accessKey.startsWith('YOUR-')) {
-      window.location.href = '/thank-you-contact/';
-      return;
-    }
-
     try {
-      // Exact WebForge Web3Forms method:
-      // fetch with body: new FormData(form) + header 'Accept': 'application/json' ONLY.
-      // NO Content-Type, NO action, NO method, NO redirect field.
-      const res = await fetch('https://api.web3forms.com/submit', {
+      const apiRes = await fetch('/api/contact', {
         method: 'POST',
-        headers: { Accept: 'application/json' },
-        body: new FormData(form),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name,
+          email: replyTo,
+          phone,
+          destinationCity,
+          kittenName: selectedKitten,
+          message,
+          cartItems,
+          totalFee: cartItems.length > 0 ? finalTotal : undefined,
+          reservationDeposit: cartItems.length > 0 ? depositTotal : undefined,
+          useCrypto,
+        }),
       });
 
-      const data = await res.json();
-      if (res.status === 200 && data.success) {
-        window.location.href = '/thank-you-contact/';
-      } else {
-        throw new Error(data.message || 'Submission failed');
+      const apiData = await apiRes.json();
+
+      try {
+        sessionStorage.setItem(
+          'mch-last-inquiry',
+          JSON.stringify({
+            name,
+            email: replyTo,
+            selectedKitten,
+            coordinatorEmail: apiData.coordinatorEmail || CONTACT.email,
+            mailtoUrl: apiData.mailtoUrl || directMailtoUrl,
+            deliveredVia: apiData.deliveredVia || 'recorded',
+          })
+        );
+      } catch {
+        // Ignore sessionStorage errors
       }
-    } catch (err) {
+
+      if (apiRes.ok && apiData.success) {
+        router.push('/thank-you-contact/');
+        return;
+      }
+
+      throw new Error(apiData.message || 'Submission failed');
+    } catch {
       setErrorMsg(
-        'There was a temporary issue sending your inquiry. Please reach out to us directly via WhatsApp or email.'
+        `There was a temporary issue sending your inquiry. Click "Open in Email App (${CONTACT.email})" below or reach us on WhatsApp.`
       );
       setSubmitting(false);
     }
@@ -75,7 +182,7 @@ export default function ContactPage() {
             Contact Maine Coon Heaven Cattery
           </h1>
           <p className="text-xs sm:text-sm text-[#7A746E] mt-3 leading-relaxed">
-            Have questions about an available kitten, future planned litters, or domestic flight transport? We are here to help your family every step of the way.
+            Have questions about an available kitten, future planned litters, or domestic flight transport? Submit your inquiry directly to {CONTACT.email}.
           </p>
         </div>
 
@@ -89,7 +196,7 @@ export default function ContactPage() {
 
               {/* WhatsApp */}
               <a
-                href={`https://wa.me/${cleanPhone}`}
+                href={getWhatsAppUrl('Hello Maine Coon Heaven! I would like to inquire about available kittens.')}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-start gap-4 p-3 rounded-xl hover:bg-[#FAF8F5] transition-colors group"
@@ -123,7 +230,7 @@ export default function ContactPage() {
                 </div>
               </a>
 
-              {/* Email (Entity Encoded) */}
+              {/* Email */}
               <div className="flex items-start gap-4 p-3 rounded-xl">
                 <div className="w-10 h-10 rounded-xl bg-[#FAF8F5] text-[#C59B4B] flex items-center justify-center shrink-0 border border-[#E8E2D8]">
                   <Mail className="w-5 h-5" />
@@ -132,8 +239,8 @@ export default function ContactPage() {
                   <div className="text-xs font-bold text-[#16161A]">Official Inquiries</div>
                   <div className="text-xs text-[#5C554E] mt-0.5">
                     <a
-                      href={`mailto:${CONTACT.email}`}
-                      className="hover:text-[#C59B4B] underline"
+                      href={directMailtoUrl}
+                      className="hover:text-[#C59B4B] underline break-all"
                     >
                       {CONTACT.email}
                     </a>
@@ -166,14 +273,77 @@ export default function ContactPage() {
             </div>
           </div>
 
-          {/* Right Column: Web3Forms CORS Form */}
+          {/* Right Column: Email Inquiry Form with Cart Pre-Fill */}
           <div className="lg:col-span-2 bg-white rounded-2xl border border-[#E8E2D8] p-8 sm:p-10 shadow-sm">
             <h2 className="font-serif font-bold text-xl text-[#16161A] mb-2">
-              Send an Adoption Inquiry
+              Send a New Kitten Adoption Inquiry
             </h2>
-            <p className="text-xs sm:text-sm text-[#7A746E] mb-8">
-              Fill out the details below. Our adoption coordinator will review your preferences and contact you promptly.
+            <p className="text-xs sm:text-sm text-[#7A746E] mb-6">
+              Your inquiry goes directly to <strong className="text-[#16161A]">{CONTACT.email}</strong>. Our adoption coordinator will review your preferences and respond promptly.
             </p>
+
+            {/* Pre-loaded Cart Kittens Summary */}
+            {cartItems.length > 0 && (
+              <div className="mb-8 p-5 rounded-2xl bg-[#FCF8EE] border border-[#DBC9A2] space-y-4">
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#8C6212]">
+                    <ShoppingBag className="w-4 h-4 text-[#C59B4B]" />
+                    <span>Kittens Selected in Your Cart ({cartItems.reduce((t, i) => t + (i.qty || 1), 0)})</span>
+                  </div>
+                  <span className="text-xs font-bold text-[#16161A]">
+                    Deposit Due: ${depositTotal.toLocaleString()} {SITE.currency}
+                  </span>
+                </div>
+
+                <div className="space-y-2.5">
+                  {cartItems.map((item) => (
+                    <div
+                      key={item.slug}
+                      className="flex items-center justify-between gap-3 bg-white p-3 rounded-xl border border-[#E8DEC3]"
+                    >
+                      <div className="flex items-center gap-3 min-w-0">
+                        <img
+                          src={item.image}
+                          alt={item.name}
+                          className="w-12 h-12 rounded-lg object-contain bg-white border border-[#E8E2D8] shrink-0"
+                        />
+                        <div className="min-w-0">
+                          <div className="text-xs font-bold text-[#16161A] truncate">
+                            {item.name}
+                          </div>
+                          <div className="text-[11px] text-[#7A746E]">
+                            {item.color} · Qty {item.qty || 1} · ${Number(item.price || 0).toLocaleString()} {SITE.currency}
+                          </div>
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveCartItem(item.slug)}
+                        className="p-1.5 text-[#A09A93] hover:text-red-600 transition-colors"
+                        aria-label={`Remove ${item.name}`}
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-[#E8DEC3] text-xs">
+                  <label className="inline-flex items-center gap-2 cursor-pointer font-medium text-[#16161A]">
+                    <input
+                      type="checkbox"
+                      checked={useCrypto}
+                      onChange={(e) => setUseCrypto(e.target.checked)}
+                      className="w-4 h-4 accent-[#C59B4B]"
+                    />
+                    <span>Apply 10% Bitcoin / USDT discount (-${Math.round((subtotal * SHOP.cryptoDiscount) / 100).toLocaleString()} {SITE.currency})</span>
+                  </label>
+                  <span className="font-bold text-[#16161A]">
+                    Total Fee: ${finalTotal.toLocaleString()} {SITE.currency}
+                  </span>
+                </div>
+              </div>
+            )}
 
             {errorMsg && (
               <div
@@ -186,7 +356,6 @@ export default function ContactPage() {
             )}
 
             <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Mandatory Web3Forms hidden inputs */}
               <input
                 type="hidden"
                 name="access_key"
@@ -195,10 +364,9 @@ export default function ContactPage() {
               <input
                 type="hidden"
                 name="subject"
-                value="New Maine Coon Kitten Adoption Inquiry"
+                value={directEmailSubject}
               />
               <input type="hidden" name="from_name" value={SITE.name} />
-              {/* Honeypot anti-spam botcheck */}
               <input
                 type="checkbox"
                 name="botcheck"
@@ -207,7 +375,6 @@ export default function ContactPage() {
                 tabIndex={-1}
                 autoComplete="off"
               />
-              {/* replyto synced with email input */}
               <input type="hidden" name="replyto" value={replyTo} />
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -223,6 +390,8 @@ export default function ContactPage() {
                     type="text"
                     name="name"
                     required
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                     placeholder="e.g. Sarah Jenkins"
                     className="w-full px-4 py-3 rounded-xl border border-[#D8D2C9] text-xs text-[#16161A] focus:outline-none focus:ring-2 focus:ring-[#C59B4B] bg-[#FAF8F5]"
                   />
@@ -261,6 +430,8 @@ export default function ContactPage() {
                     type="tel"
                     name="phone"
                     required
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
                     placeholder="e.g. 0401 000 000"
                     className="w-full px-4 py-3 rounded-xl border border-[#D8D2C9] text-xs text-[#16161A] focus:outline-none focus:ring-2 focus:ring-[#C59B4B] bg-[#FAF8F5]"
                   />
@@ -271,13 +442,22 @@ export default function ContactPage() {
                     htmlFor="kitten"
                     className="block text-xs font-bold text-[#16161A] mb-2 uppercase tracking-wider"
                   >
-                    Kitten of Interest (Optional)
+                    Kitten of Interest
                   </label>
                   <select
                     id="kitten"
                     name="kitten_of_interest"
+                    value={selectedKitten}
+                    onChange={(e) => setSelectedKitten(e.target.value)}
                     className="w-full px-4 py-3 rounded-xl border border-[#D8D2C9] text-xs text-[#16161A] focus:outline-none focus:ring-2 focus:ring-[#C59B4B] bg-[#FAF8F5]"
                   >
+                    {cartItems.length > 1 && (
+                      <option
+                        value={`Cart Kittens (${cartItems.length}): ${cartItems.map((i) => i.name).join(', ')}`}
+                      >
+                        Selected Cart Kittens ({cartItems.length}): {cartItems.map((i) => i.name).join(', ')}
+                      </option>
+                    )}
                     <option value="General Inquiry">General Kitten Inquiry</option>
                     {PRODUCTS.map((p) => (
                       <option key={p.slug} value={p.name}>
@@ -300,7 +480,9 @@ export default function ContactPage() {
                   id="location"
                   type="text"
                   name="destination_city"
-                  placeholder="e.g. Melbourne, VIC or Brisbane, QLD"
+                  value={destinationCity}
+                  onChange={(e) => setDestinationCity(e.target.value)}
+                  placeholder="e.g. Melbourne, VIC or Sydney, NSW"
                   className="w-full px-4 py-3 rounded-xl border border-[#D8D2C9] text-xs text-[#16161A] focus:outline-none focus:ring-2 focus:ring-[#C59B4B] bg-[#FAF8F5]"
                 />
               </div>
@@ -315,28 +497,41 @@ export default function ContactPage() {
                 <textarea
                   id="message"
                   name="message"
-                  rows={4}
+                  rows={5}
                   required
+                  value={message}
+                  onChange={(e) => {
+                    setMessageTouched(true);
+                    setMessage(e.target.value);
+                  }}
                   placeholder="Tell us a little about your home environment, experience with cats, or specific questions about the kitten..."
                   className="w-full px-4 py-3 rounded-xl border border-[#D8D2C9] text-xs text-[#16161A] focus:outline-none focus:ring-2 focus:ring-[#C59B4B] bg-[#FAF8F5]"
                 ></textarea>
               </div>
 
-              <div className="pt-2">
+              <div className="pt-2 flex flex-col sm:flex-row gap-3">
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="w-full sm:w-auto px-8 py-4 bg-[#16161A] hover:bg-[#C59B4B] text-white font-semibold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md flex items-center justify-center gap-2 disabled:opacity-50"
+                  className="flex-1 sm:flex-none px-8 py-4 bg-[#16161A] hover:bg-[#C59B4B] text-white font-semibold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md flex items-center justify-center gap-2 disabled:opacity-50"
                 >
                   {submitting ? (
-                    <span>Sending Inquiry...</span>
+                    <span>Sending New Inquiry...</span>
                   ) : (
                     <>
                       <Send className="w-4 h-4" />
-                      <span>Submit Adoption Inquiry</span>
+                      <span>Submit New Inquiry</span>
                     </>
                   )}
                 </button>
+
+                <a
+                  href={directMailtoUrl}
+                  className="px-6 py-4 bg-[#FCF8EE] hover:bg-[#F3E9D2] border border-[#DBC9A2] text-[#16161A] font-semibold text-xs uppercase tracking-wider rounded-xl transition-colors flex items-center justify-center gap-2"
+                >
+                  <Mail className="w-4 h-4 text-[#C59B4B]" />
+                  <span>Open in Email App</span>
+                </a>
               </div>
             </form>
           </div>

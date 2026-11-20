@@ -4,7 +4,7 @@ import { SITE, CONTACT, SHOP } from '@/src/config/site.js';
 export const dynamic = 'force-dynamic';
 
 export async function GET() {
-  const cleanPhone = CONTACT.whatsapp.replace(/[^\d+]/g, '');
+  const cleanPhone = CONTACT.whatsapp.replace(/\D/g, '');
 
   return Response.json(
     {

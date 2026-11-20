@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { CheckCircle2, MessageCircle, ArrowRight } from 'lucide-react';
-import { SITE, CONTACT } from '@/src/config/site.js';
+import { CONTACT, getWhatsAppUrl } from '@/src/config/site.js';
 
 export const metadata = {
   title: "Reservation Received | Maine Coon Heaven",
@@ -12,7 +12,6 @@ export const metadata = {
 };
 
 export default function ThankYouOrderPage() {
-  const cleanPhone = CONTACT.whatsapp.replace(/[^\d+]/g, '');
 
   return (
     <div className="bg-[#FAF8F5] py-20 min-h-[60vh] flex items-center justify-center">
@@ -38,7 +37,7 @@ export default function ThankYouOrderPage() {
             Send us a quick message on WhatsApp to receive current videos of your chosen kitten and lock in your adoption contract:
           </p>
           <a
-            href={`https://wa.me/${cleanPhone}`}
+            href={getWhatsAppUrl('Hello Maine Coon Heaven! I would like to connect regarding my kitten reservation.')}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#25D366] text-white text-xs font-semibold rounded-lg hover:bg-[#20BE5B] transition-colors"

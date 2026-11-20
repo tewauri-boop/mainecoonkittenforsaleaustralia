@@ -2,15 +2,14 @@
 
 import { useState } from 'react';
 import { ShoppingBag, Check, MessageCircle } from 'lucide-react';
-import { SITE, CONTACT, getKittenDeposit } from '@/src/config/site.js';
+import { SITE, getKittenDeposit, getWhatsAppUrl } from '@/src/config/site.js';
 
 export default function KittenReserveBar({ kitten, variant = 'light' }) {
   const [added, setAdded] = useState(false);
 
   const deposit = getKittenDeposit(kitten);
-  const cleanPhone = CONTACT.whatsapp.replace(/[^\d+]/g, '');
   const whatsappMessage = `Hello Maine Coon Heaven! I would like to reserve ${kitten.name} (Total Adoption Fee: $${kitten.price.toLocaleString()} ${SITE.currency}, Reservation Deposit: $${deposit.toLocaleString()} ${SITE.currency}). Please let me know how to proceed.`;
-  const whatsappUrl = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(whatsappMessage)}`;
+  const whatsappUrl = getWhatsAppUrl(whatsappMessage);
 
   const handleReserve = (e) => {
     e.preventDefault();
@@ -38,6 +37,7 @@ export default function KittenReserveBar({ kitten, variant = 'light' }) {
 
       localStorage.setItem(SITE.cartKey, JSON.stringify(currentCart));
       window.dispatchEvent(new Event('storage'));
+      window.dispatchEvent(new CustomEvent('mch-open-cart'));
       setAdded(true);
       setTimeout(() => setAdded(false), 2500);
     } catch (err) {

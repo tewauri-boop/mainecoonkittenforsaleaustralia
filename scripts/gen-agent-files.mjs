@@ -17,8 +17,8 @@ async function main() {
   const minOrder = SHOP.minOrder || 0;
   const freeShipping = SHOP.freeShippingThreshold || 0;
   const whatsappNum = CONTACT.whatsapp || '+61401667279';
-  const cleanPhone = whatsappNum.replace(/[^\d+]/g, '');
-  const email = CONTACT.email || 'mainecoonheavenus@gmail.com';
+  const cleanPhone = whatsappNum.replace(/\D/g, '');
+  const email = CONTACT.email || 'mainecoonheavenau00@gmail.com';
   const indexNowKey = SITE.indexNowKey || 'mch-indexnow-key-2026';
 
   // Ensure directories exist
